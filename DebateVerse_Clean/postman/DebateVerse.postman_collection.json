@@ -1,0 +1,235 @@
+{
+  "info": {
+    "name": "DebateVerse API Collection",
+    "description": "Comprehensive REST API test collection for DebateVerse educational platform, covering Auth, Debates, Arguments, Voting, Results, Book CRUD, MongoDB Aggregations, Feedback, and AI Argument Analyzer.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:5000/api", "type": "string" },
+    { "key": "token", "value": "", "type": "string" },
+    { "key": "debateId", "value": "", "type": "string" },
+    { "key": "argumentId", "value": "", "type": "string" },
+    { "key": "bookId", "value": "", "type": "string" }
+  ],
+  "item": [
+    {
+      "name": "1. Health Check",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/health"
+      }
+    },
+    {
+      "name": "2. Authentication",
+      "item": [
+        {
+          "name": "Register Student",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/auth/register",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Test Student\",\n  \"email\": \"test.student@university.edu\",\n  \"password\": \"password123\",\n  \"confirmPassword\": \"password123\",\n  \"college\": \"National University\",\n  \"interests\": [\"AI\", \"Ethics\"]\n}"
+            }
+          }
+        },
+        {
+          "name": "Login Student",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/auth/login",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"aarav@debateverse.edu\",\n  \"password\": \"password123\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Get Current Student Profile",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/auth/me",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }]
+          }
+        }
+      ]
+    },
+    {
+      "name": "3. Debates Arena & Timers",
+      "item": [
+        {
+          "name": "Get All Debates (with search & filter)",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/debates?category=Technology%20%26%20AI&sortBy=popular"
+          }
+        },
+        {
+          "name": "Get Debate Details by ID",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/debates/{{debateId}}",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }]
+          }
+        },
+        {
+          "name": "Create Debate Topic (Timed Round)",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/debates",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Should autonomous vehicles make utilitarian moral decisions in inevitable collision scenarios?\",\n  \"statement\": \"Autonomous driving software must be programmed with explicit utilitarian consequentialist ethics.\",\n  \"description\": \"Exploring ethics, liability, and machine decision-making.\",\n  \"category\": \"Technology & AI\",\n  \"durationMinutes\": 15\n}"
+            }
+          }
+        },
+        {
+          "name": "Join Debate on Side",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/debates/{{debateId}}/join",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"side\": \"support\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Submit Argument",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/debates/{{debateId}}/arguments",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"content\": \"Utilitarian algorithms objectively minimize net loss of human life across aggregate traffic distributions, avoiding arbitrary chaotic outcomes.\",\n  \"sourceLinks\": [\"https://nature.com/articles/d41586-018-07135-0\"]\n}"
+            }
+          }
+        },
+        {
+          "name": "Vote for Argument",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/debates/{{debateId}}/votes",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"argumentId\": \"{{argumentId}}\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Get Debate Results",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/debates/{{debateId}}/results"
+          }
+        }
+      ]
+    },
+    {
+      "name": "4. Resources Library (Book CRUD REST API)",
+      "item": [
+        {
+          "name": "GET All Books",
+          "request": { "method": "GET", "url": "{{baseUrl}}/books" }
+        },
+        {
+          "name": "POST Create Book",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/books",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Mastering Parliamentary Debate\",\n  \"author\": \"Christopher L. Frost\",\n  \"category\": \"Debate Strategy\",\n  \"description\": \"Comprehensive collegiate tournament guide for parliamentary format refutation.\",\n  \"publicationYear\": 2021\n}"
+            }
+          }
+        },
+        {
+          "name": "PUT Update Book",
+          "request": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/books/{{bookId}}",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"publicationYear\": 2023\n}"
+            }
+          }
+        },
+        {
+          "name": "DELETE Book",
+          "request": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/books/{{bookId}}",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }]
+          }
+        }
+      ]
+    },
+    {
+      "name": "5. MongoDB Aggregations & Analytics",
+      "item": [
+        {
+          "name": "Get Leaderboard (Pipeline 4)",
+          "request": { "method": "GET", "url": "{{baseUrl}}/analytics/leaderboard" }
+        },
+        {
+          "name": "Get Dashboard Analytics (Pipelines 1, 3, 5, 6)",
+          "request": { "method": "GET", "url": "{{baseUrl}}/analytics/dashboard" }
+        },
+        {
+          "name": "Get Student Grade Analytics (Pipelines 7, 8, 9, 10)",
+          "request": { "method": "GET", "url": "{{baseUrl}}/analytics/grades" }
+        }
+      ]
+    },
+    {
+      "name": "6. AI Debate Lab (Argument Analyzer)",
+      "request": {
+        "method": "POST",
+        "url": "{{baseUrl}}/ai/analyze",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"topic\": \"Should university exams permit generative AI assistance?\",\n  \"side\": \"support\",\n  \"content\": \"Permitting AI assistants trains undergraduates for modern software industry practices where synthetic coding tools are ubiquitous. Therefore, academic evaluation should focus on architectural validation rather than rote syntax.\"\n}"
+        }
+      }
+    },
+    {
+      "name": "7. Feedback (Angular & React Endpoint)",
+      "request": {
+        "method": "POST",
+        "url": "{{baseUrl}}/feedback",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Student Reviewer\",\n  \"email\": \"reviewer@university.edu\",\n  \"subject\": \"Debate Scoring System Feedback\",\n  \"message\": \"The timed round deadlines and dual-stance argument columns work excellently during classroom debates!\"\n}"
+        }
+      }
+    }
+  ]
+}

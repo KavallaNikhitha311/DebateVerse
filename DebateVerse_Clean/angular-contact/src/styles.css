@@ -1,0 +1,92 @@
+:root {
+  --bg-main: #FFFFFF;
+  --bg-section-alt: #F8FAFC;
+  --accent-primary: #4F46E5;
+  --accent-primary-light: #EEF2FF;
+  --accent-secondary: #E0E7FF;
+  --accent-mint: #DCFCE7;
+  --accent-coral: #FEE2E2;
+  --text-main: #0F172A;
+  --text-muted: #64748B;
+  --border-light: #E2E8F0;
+  --font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --radius-md: 12px;
+  --radius-pill: 9999px;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-family);
+  background-color: var(--bg-main);
+  color: var(--text-main);
+  line-height: 1.6;
+}
+
+.dv-card {
+  background-color: #FFFFFF;
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+}
+
+.dv-input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0.65rem 0.95rem;
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+  font-family: inherit;
+  font-size: 0.95rem;
+  color: var(--text-main);
+  background-color: #FFFFFF;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.dv-input:focus {
+  border-color: #6366F1;
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
+}
+
+.dv-input.is-invalid {
+  border-color: #EF4444;
+}
+
+.btn-dv-primary {
+  background-color: #4F46E5;
+  color: #FFFFFF;
+  border: 1px solid #4338CA;
+  font-weight: 500;
+  padding: 0.65rem 1.4rem;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 0.95rem;
+}
+
+.btn-dv-primary:hover:not(:disabled) {
+  background-color: #4338CA;
+}
+
+.btn-dv-primary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.dv-badge-primary {
+  background-color: #EEF2FF;
+  color: #4338CA;
+  border: 1px solid #C7D2FE;
+  padding: 0.35rem 0.75rem;
+  border-radius: var(--radius-pill);
+  font-size: 0.8rem;
+  font-weight: 500;
+  display: inline-block;
+}
+
+.error-text {
+  color: #DC2626;
+  font-size: 0.8rem;
+  margin-top: 4px;
+}
